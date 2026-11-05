@@ -38,3 +38,41 @@ export function completeTask(tasks: Task[], id: number): Task[] {
 export function filterByStatus(tasks: Task[], status: TaskStatus): Task[] {
   return tasks.filter((task) => task.status === status);
 }
+
+// ---------- My own operations ----------
+
+/** Where each status goes next. Typing it as Record<TaskStatus, TaskStatus> means
+ *  that if a new status is ever added to the union, tsc errors here until its
+ *  next step is written, so no status can be forgotten. */
+const NEXT_STATUS: Record<TaskStatus, TaskStatus> = {
+  todo: "in-progress",
+  "in-progress": "done",
+  done: "done",
+};
+
+/** Moves one task a step forward: todo → in-progress → done. A done task stays done. */
+export function advanceTask(tasks: Task[], id: number): Task[] {
+  return tasks.map((task): Task =>
+    task.id === id ? { ...task, status: NEXT_STATUS[task.status] } : task,
+  );
+}
+
+/** Returns a new list where the task with this id has a new title. */
+export function renameTask(tasks: Task[], id: number, title: string): Task[] {
+  return tasks.map((task): Task => (task.id === id ? { ...task, title } : task));
+}
+
+/** Returns a new list without the task with this id. */
+export function deleteTask(tasks: Task[], id: number): Task[] {
+  return tasks.filter((task) => task.id !== id);
+}
+
+/** Counts the tasks in every status at once, for example { todo: 2, "in-progress": 1, done: 3 }.
+ *  The return type has a key for every TaskStatus, so the counts can never miss one. */
+export function countByStatus(tasks: Task[]): Record<TaskStatus, number> {
+  const counts: Record<TaskStatus, number> = { todo: 0, "in-progress": 0, done: 0 };
+  for (const task of tasks) {
+    counts[task.status] += 1;
+  }
+  return counts;
+}
