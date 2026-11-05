@@ -27,3 +27,14 @@ export function addTask(tasks: Task[], title: string): Task[] {
   const task: Task = { id: nextId(tasks), title, status: "todo" };
   return [...tasks, task];
 }
+
+/** Returns a new list where the task with this id is marked "done". */
+export function completeTask(tasks: Task[], id: number): Task[] {
+  return tasks.map((task): Task => (task.id === id ? { ...task, status: "done" } : task));
+}
+
+/** Returns only the tasks with this status. Because `status` is a TaskStatus,
+ *  a value like "finished" is a compile error, not a silent empty list. */
+export function filterByStatus(tasks: Task[], status: TaskStatus): Task[] {
+  return tasks.filter((task) => task.status === status);
+}
