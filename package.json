@@ -1,0 +1,20 @@
+{
+  "name": "typetasks",
+  "version": "1.0.0",
+  "description": "TypeTasks: a small type-safe task tracker. Part 1 is the typed data model.",
+  "type": "module",
+  "main": "dist/model.js",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "typescript",
+    "tasks"
+  ],
+  "author": "Mugilan",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
