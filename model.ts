@@ -76,3 +76,20 @@ export function countByStatus(tasks: Task[]): Record<TaskStatus, number> {
   }
   return counts;
 }
+
+// ---------- Type-safety checks ----------
+// I tried to break the model on purpose. Each line below made `tsc` fail with
+// the error shown under it, which proves the types are tight. They stay
+// commented out so the project compiles with zero errors.
+//
+// const noStatus: Task = { id: 1, title: "Buy milk" };
+//   error TS2741: Property 'status' is missing in type '{ id: number; title: string; }' but required in type 'Task'.
+//
+// const stringId: Task = { id: "3", title: "Buy milk", status: "todo" };
+//   error TS2322: Type 'string' is not assignable to type 'number'.
+//
+// filterByStatus([], "finished");
+//   error TS2345: Argument of type '"finished"' is not assignable to parameter of type 'TaskStatus'.
+//
+// const badStatus: Task = { id: 4, title: "Read", status: "doing" };
+//   error TS2322: Type '"doing"' is not assignable to type 'TaskStatus'.
