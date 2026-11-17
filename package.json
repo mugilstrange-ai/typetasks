@@ -1,9 +1,9 @@
 {
   "name": "typetasks",
   "version": "1.0.0",
-  "description": "TypeTasks: a small type-safe task tracker. Part 1 is the typed data model.",
+  "description": "TypeTasks: a small type-safe task tracker with a plain HTML/CSS UI, compiled with tsc and deployed to GitHub Pages.",
   "type": "module",
-  "main": "dist/model.js",
+  "main": "model.js",
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit"

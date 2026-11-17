@@ -2,13 +2,15 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
+    // No outDir: tsc writes model.js and app.js right next to the .ts files,
+    // so index.html can load app.js and the static host can serve it as-is.
     "rootDir": "./",
-    "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
-    "target": "esnext",
+    "target": "es2022",
+    "lib": ["es2022", "dom", "dom.iterable"],
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -16,9 +18,9 @@
     // and npm install -D @types/node
 
     // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+    // Only the .js files are needed in the browser, so no maps or .d.ts files.
+    "sourceMap": false,
+    "declaration": false,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
@@ -34,11 +36,11 @@
 
     // Recommended Options
     "strict": true,
-    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-  }
+  },
+  "exclude": ["node_modules"]
 }
