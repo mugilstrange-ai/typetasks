@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TaskTrail · Mugilan's typed task tracker</title>
+    <meta name="description" content="TaskTrail: a small task tracker driven by a typed TypeScript model." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="masthead">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">🧭</span>
+          <div>
+            <h1>TaskTrail</h1>
+            <p class="tagline">Mugilan's task tracker, every click runs typed TypeScript.</p>
+          </div>
+        </div>
+
+        <section class="stats" aria-label="Task counts">
+          <div class="stat stat-todo">
+            <span class="stat-number" id="count-todo">0</span>
+            <span class="stat-label">To do</span>
+          </div>
+          <div class="stat stat-in-progress">
+            <span class="stat-number" id="count-in-progress">0</span>
+            <span class="stat-label">In progress</span>
+          </div>
+          <div class="stat stat-done">
+            <span class="stat-number" id="count-done">0</span>
+            <span class="stat-label">Done</span>
+          </div>
+        </section>
+
+        <div class="progress" role="progressbar" aria-label="Tasks done" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="progress-text" id="progress-text">No tasks yet</p>
+      </header>
+
+      <main class="board">
+        <form class="add-form" id="task-form" autocomplete="off">
+          <label class="visually-hidden" for="title">New task</label>
+          <input id="title" name="title" type="text" maxlength="80" placeholder="What do you need to do?" />
+          <button type="submit" class="add-button">Add task</button>
+        </form>
+        <p class="hint" id="hint" role="alert"></p>
+
+        <nav class="filters" id="filters" aria-label="Filter tasks by status">
+          <button type="button" class="chip" data-filter="all" aria-pressed="true">All <span class="chip-count" id="chip-all">0</span></button>
+          <button type="button" class="chip" data-filter="todo" aria-pressed="false">To do <span class="chip-count" id="chip-todo">0</span></button>
+          <button type="button" class="chip" data-filter="in-progress" aria-pressed="false">In progress <span class="chip-count" id="chip-in-progress">0</span></button>
+          <button type="button" class="chip" data-filter="done" aria-pressed="false">Done <span class="chip-count" id="chip-done">0</span></button>
+        </nav>
+
+        <ul class="task-list" id="task-list" aria-live="polite"></ul>
+        <p class="empty" id="empty" hidden></p>
+      </main>
+
+      <footer class="footer">
+        Built by Mugilan with plain HTML, CSS and TypeScript. The model is in
+        <code>model.ts</code>, the UI wiring in <code>app.ts</code>, compiled by <code>tsc</code>.
+      </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
