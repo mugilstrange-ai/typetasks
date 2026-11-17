@@ -1,0 +1,64 @@
+name: Type-check
+
+# Proves that `tsc` builds model.ts and app.ts with zero errors, that the
+# committed app.js / model.js match what tsc produces, and that no `any` is used.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  tsc:
+    name: tsc, compiled JS and model check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install TypeScript
+        run: npm ci
+
+      - name: Compile with tsc (must report zero errors)
+        run: |
+          npx tsc --version
+          npx tsc
+          {
+            echo "## tsc"
+            echo "- $(npx tsc --version): compiled model.ts and app.ts with **0 errors**"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Committed app.js and model.js are up to date
+        run: |
+          git diff --exit-code -- app.js model.js
+          echo "- app.js and model.js in the repo match the tsc output" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: No any in the TypeScript
+        run: |
+          if grep -nE '(:|<|as)\s*any\b' model.ts app.ts; then
+            echo "Found an any type" && exit 1
+          fi
+          echo "- no \`any\` types in model.ts or app.ts" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run the compiled model
+        run: |
+          node --input-type=module -e '
+            import { addTask, advanceTask, completeTask, filterByStatus, deleteTask } from "./model.js";
+            let tasks = addTask([], "Write the UI");
+            tasks = addTask(tasks, "Deploy");
+            tasks = advanceTask(tasks, 1);
+            if (tasks[0].status !== "in-progress") throw new Error("advanceTask failed");
+            tasks = completeTask(tasks, 2);
+            if (tasks[1].status !== "done") throw new Error("completeTask failed");
+            if (filterByStatus(tasks, "done").length !== 1) throw new Error("filterByStatus failed");
+            if (deleteTask(tasks, 1).length !== 1) throw new Error("deleteTask failed");
+            console.log("model.js works:", JSON.stringify(tasks));
+          '
+          echo "- compiled model.js runs: addTask, advanceTask, completeTask, filterByStatus, deleteTask all behave" >> "$GITHUB_STEP_SUMMARY"
