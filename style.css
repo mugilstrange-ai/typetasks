@@ -1,0 +1,333 @@
+/* TaskTrail: Mugilan's colours and layout.
+   Teal for the brand, one colour per status, warm paper background. */
+
+:root {
+  --paper: #f6f1e7;
+  --card: #fffdf8;
+  --ink: #1d2b2a;
+  --muted: #6b7774;
+  --line: #e6dfd1;
+  --brand: #0f766e;
+  --brand-dark: #0b5952;
+  --todo: #4f6d9a;
+  --todo-soft: #e6edf7;
+  --doing: #c9711e;
+  --doing-soft: #fbecd9;
+  --done: #2f8f5b;
+  --done-soft: #e0f2e7;
+  --danger: #b4423a;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(29, 43, 42, 0.06), 0 6px 18px rgba(29, 43, 42, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 18px 40px;
+}
+
+/* ---------- Header ---------- */
+
+.masthead {
+  background: linear-gradient(135deg, var(--brand) 0%, #13968b 100%);
+  color: #fff;
+  border-radius: 20px;
+  padding: 22px 22px 18px;
+  box-shadow: var(--shadow);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  font-size: 2.2rem;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0;
+  opacity: 0.88;
+  font-size: 0.95rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.stat {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid transparent;
+}
+
+.stat-todo { border-left-color: #a9c1e6; }
+.stat-in-progress { border-left-color: #f3bd7f; }
+.stat-done { border-left-color: #9fdcb8; }
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+
+.progress {
+  margin-top: 16px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: #fff;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+/* ---------- Add form ---------- */
+
+.board {
+  margin-top: 22px;
+}
+
+.add-form {
+  display: flex;
+  gap: 10px;
+}
+
+.add-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 12px 14px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+}
+
+.add-form input:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.add-button {
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
+
+.add-button:hover {
+  background: var(--brand-dark);
+}
+
+.hint {
+  min-height: 1.4em;
+  margin: 6px 2px 0;
+  color: var(--danger);
+  font-size: 0.88rem;
+}
+
+/* ---------- Filter chips ---------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+.chip {
+  border: 2px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.chip-count {
+  display: inline-block;
+  min-width: 1.6em;
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--line);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.chip[aria-pressed="true"] .chip-count {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Task list ---------- */
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--todo);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+
+.task[data-status="in-progress"] { border-left-color: var(--doing); }
+.task[data-status="done"] { border-left-color: var(--done); }
+
+.task-title {
+  overflow-wrap: anywhere;
+}
+
+.task[data-status="done"] .task-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-todo { background: var(--todo-soft); color: var(--todo); }
+.badge-in-progress { background: var(--doing-soft); color: var(--doing); }
+.badge-done { background: var(--done-soft); color: var(--done); }
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.action {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.action:hover { border-color: var(--ink); }
+.action-advance { color: var(--doing); border-color: #efd2ad; }
+.action-complete { color: var(--done); border-color: #bfe3cc; }
+.action-delete { color: var(--danger); }
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 26px 10px;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+.footer {
+  margin-top: 30px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.95em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 560px) {
+  .page { padding: 16px 12px 32px; }
+  h1 { font-size: 1.6rem; }
+  .stat-number { font-size: 1.3rem; }
+  .task {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .badge { justify-self: start; }
+  .actions { flex-wrap: wrap; }
+}
